@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<header>
+    <h1>Fitness Info</h1>
+
+    <nav>
+        <a href="{% url 'home' %}">Головна</a>
+        <a href="{% url 'nutrition' %}">Харчування</a>
+
+        {% for group in muscle_groups %}
+            <a href="{% url 'category_exercises' group.id %}">{{ group.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+
+<hr>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<hr>
+
+<footer>
+    <p>Fitness Info — сайт про тренування, харчування та здоровий спосіб життя.</p>
+    <p>Автор: Захар Машманюк</p>
+</footer>
+
+</body>
+</html>

@@ -1,17 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fitness Home</title>
-</head>
-<body>
+{% extends 'gym/base.html' %}
 
-    <h1>{{ title }}</h1>
+{% block content %}
 
-    <p>Вітаємо на фітнес сайті!</p>
+<h2>Головна сторінка</h2>
 
-    <a href="/workouts/">Тренування</a>
-    <br>
-    <a href="/nutrition/">Харчування</a>
+<p>Вітаємо на сайті Fitness Info. Тут можна знайти вправи для різних груп м’язів та плани харчування.</p>
 
-</body>
-</html>
+<h3>Вправи з бази даних</h3>
+
+{% for exercise in exercises %}
+    <div>
+        <h4>{{ exercise.name }}</h4>
+        <p><b>Група м’язів:</b> {{ exercise.muscle_group.name }}</p>
+        <p>{{ exercise.description }}</p>
+        <p><b>Складність:</b> {{ exercise.difficulty }}</p>
+    </div>
+    <hr>
+{% endfor %}
+
+<h3>Плани харчування</h3>
+
+{% for plan in nutrition_plans %}
+    <div>
+        <h4>{{ plan.name }}</h4>
+        <p><b>Калорії:</b> {{ plan.calories }}</p>
+        <p><b>Білки:</b> {{ plan.protein }} г</p>
+        <p>{{ plan.description }}</p>
+    </div>
+    <hr>
+{% endfor %}
+
+{% endblock %}

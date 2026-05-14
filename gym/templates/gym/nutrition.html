@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Nutrition</title>
-</head>
-<body>
+{% extends 'gym/base.html' %}
 
-    <h1>{{ title }}</h1>
+{% block content %}
 
-    <p>{{ description }}</p>
+<h2>Харчування</h2>
 
-    <a href="/">На головну</a>
+{% for plan in nutrition_plans %}
+    <div>
+        <h3>{{ plan.name }}</h3>
+        <p><b>Калорії:</b> {{ plan.calories }}</p>
+        <p><b>Білки:</b> {{ plan.protein }} г</p>
+        <p>{{ plan.description }}</p>
+    </div>
+    <hr>
+{% endfor %}
 
-</body>
-</html>
+<a href="{% url 'home' %}">Повернутися на головну</a>
+
+{% endblock %}

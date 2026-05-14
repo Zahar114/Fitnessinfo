@@ -1,0 +1,24 @@
+{% extends 'gym/base.html' %}
+
+{% block content %}
+
+<h2>Категорія: {{ category.name }}</h2>
+
+<p>{{ category.description }}</p>
+
+<h3>Вправи цієї категорії</h3>
+
+{% for exercise in exercises %}
+    <div>
+        <h4>{{ exercise.name }}</h4>
+        <p>{{ exercise.description }}</p>
+        <p><b>Складність:</b> {{ exercise.difficulty }}</p>
+    </div>
+    <hr>
+{% empty %}
+    <p>У цій категорії поки немає вправ.</p>
+{% endfor %}
+
+<a href="{% url 'home' %}">Повернутися на головну</a>
+
+{% endblock %}
