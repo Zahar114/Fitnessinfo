@@ -2,32 +2,66 @@
 
 {% block content %}
 
-<h2>Головна сторінка</h2>
-
-<p>Вітаємо на сайті Fitness Info. Тут можна знайти вправи для різних груп м’язів та плани харчування.</p>
-
-<h3>Вправи з бази даних</h3>
-
-{% for exercise in exercises %}
+<section class="hero">
     <div>
-        <h4>{{ exercise.name }}</h4>
-        <p><b>Група м’язів:</b> {{ exercise.muscle_group.name }}</p>
-        <p>{{ exercise.description }}</p>
-        <p><b>Складність:</b> {{ exercise.difficulty }}</p>
+        <h1>FitShop</h1>
+        <p>Інтернет-магазин спортивних товарів для залу, дому та активного способу життя.</p>
+        <a class="hero-btn" href="#catalog">Перейти до каталогу</a>
     </div>
-    <hr>
-{% endfor %}
+</section>
 
-<h3>Плани харчування</h3>
-
-{% for plan in nutrition_plans %}
-    <div>
-        <h4>{{ plan.name }}</h4>
-        <p><b>Калорії:</b> {{ plan.calories }}</p>
-        <p><b>Білки:</b> {{ plan.protein }} г</p>
-        <p>{{ plan.description }}</p>
+<section class="info-grid">
+    <div class="info-card">
+        <h3>Каталог товарів</h3>
+        <p>Тут можна переглянути спортивні товари по категоріях.</p>
     </div>
-    <hr>
-{% endfor %}
+
+    <div class="info-card">
+        <h3>Харчування</h3>
+        <p>Окрема сторінка з планами харчування для тренувань.</p>
+    </div>
+
+    <div class="info-card">
+        <h3>Сторінка товару</h3>
+        <p>Кожен товар має фото, опис, ціну та кнопку купівлі.</p>
+    </div>
+</section>
+
+<h2 id="catalog" class="section-title">Категорії товарів</h2>
+
+<div class="cards">
+    {% for category in categories %}
+        <div class="card">
+            <div class="card-body">
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.description }}</p>
+                <a class="btn" href="{% url 'category_products' category.id %}">
+                    Переглянути категорію
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<h2 class="section-title">Популярні товари</h2>
+
+<div class="cards">
+    {% for product in products %}
+        <div class="card">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% endif %}
+
+            <div class="card-body">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p class="price">{{ product.price }} грн</p>
+                <a class="btn" href="{% url 'product_detail' product.id %}">
+                    Детальніше
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

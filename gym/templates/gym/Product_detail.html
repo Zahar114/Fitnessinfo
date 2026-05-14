@@ -1,0 +1,31 @@
+{% extends 'gym/base.html' %}
+
+{% block content %}
+
+<div class="product-page">
+    <div class="product-image">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% endif %}
+    </div>
+
+    <div class="product-info">
+        <h1>{{ product.name }}</h1>
+
+        <p class="category-text">Категорія: {{ product.category.name }}</p>
+
+        <p>{{ product.description }}</p>
+
+        <p class="product-price">{{ product.price }} грн</p>
+
+        <button class="buy-btn" disabled>Купити</button>
+
+        <p class="note">Кнопка поки не активна, бо кошик і оплата ще не підключені.</p>
+
+        <a class="back-link" href="{% url 'category_products' product.category.id %}">
+            Назад до категорії
+        </a>
+    </div>
+</div>
+
+{% endblock %}

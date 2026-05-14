@@ -1,18 +1,18 @@
 from django.contrib import admin
-from .models import MuscleGroup, Exercise, NutritionPlan
+from .models import ProductCategory, Product, NutritionPlan
 
 
-@admin.register(MuscleGroup)
-class MuscleGroupAdmin(admin.ModelAdmin):
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at', 'updated_at')
     search_fields = ('name',)
 
 
-@admin.register(Exercise)
-class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('name', 'muscle_group', 'created_at', 'updated_at')
-    search_fields = ('name', 'muscle_group__name')
-    list_filter = ('muscle_group',)
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category', 'price', 'created_at', 'updated_at')
+    search_fields = ('name', 'category__name')
+    list_filter = ('category',)
 
 
 @admin.register(NutritionPlan)

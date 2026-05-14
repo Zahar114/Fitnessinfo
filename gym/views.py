@@ -1,55 +1,48 @@
-from django.shortcuts import render
-from .models import MuscleGroup, Exercise, NutritionPlan
+from django.shortcuts import render, get_object_or_404
+from .models import ProductCategory, Product, NutritionPlan
 
 
 def home(request):
-    muscle_groups = MuscleGroup.objects.all()
-    exercises = Exercise.objects.all()
-    nutrition_plans = NutritionPlan.objects.all()
+    categories = ProductCategory.objects.all()
+    products = Product.objects.all()[:6]
 
-    context = {
-        'title': 'Fitness Info',
-        'muscle_groups': muscle_groups,
-        'exercises': exercises,
-        'nutrition_plans': nutrition_plans,
-    }
-
-    return render(request, 'gym/home.html', context)
+    return render(request, 'gym/home.html', {
+        'title': 'FitShop',
+        'categories': categories,
+        'products': products,
+    })
 
 
-def category_exercises(request, category_id):
-    muscle_groups = MuscleGroup.objects.all()
-    category = MuscleGroup.objects.get(id=category_id)
-    exercises = Exercise.objects.filter(muscle_group=category)
+def category_products(request, category_id):
+    categories = ProductCategory.objects.all()
+    category = get_object_or_404(ProductCategory, id=category_id)
+    products = Product.objects.filter(category=category)
 
-    context = {
+    return render(request, 'gym/category.html', {
         'title': category.name,
-        'muscle_groups': muscle_groups,
+        'categories': categories,
         'category': category,
-        'exercises': exercises,
-    }
+        'products': products,
+    })
 
-    return render(request, 'gym/category.html', context)
+
+def product_detail(request, product_id):
+    categories = ProductCategory.objects.all()
+    product = get_object_or_404(Product, id=product_id)
+
+    return render(request, 'gym/product_detail.html', {
+        'title': product.name,
+        'categories': categories,
+        'product': product,
+    })
 
 
 def nutrition(request):
-    muscle_groups = MuscleGroup.objects.all()
+    categories = ProductCategory.objects.all()
     nutrition_plans = NutritionPlan.objects.all()
 
-    context = {
+    return render(request, 'gym/nutrition.html', {
         'title': 'Харчування',
-        'muscle_groups': muscle_groups,
+        'categories': categories,
         'nutrition_plans': nutrition_plans,
-    }
-
-    return render(request, 'gym/nutrition.html', context)
-def workouts(request):
-    muscle_groups = MuscleGroup.objects.all()
-    exercises = Exercise.objects.all()
-    
-    context = {
-        'title': 'Тренування',
-        'muscle_groups': muscle_groups,
-        'exercises': exercises,
-    }
-    return render(request, 'gym/workouts.html', context)
+    })

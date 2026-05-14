@@ -2,23 +2,31 @@
 
 {% block content %}
 
-<h2>Категорія: {{ category.name }}</h2>
+<section class="page-title">
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>
+</section>
 
-<p>{{ category.description }}</p>
+<div class="cards">
+    {% for product in products %}
+        <div class="card">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% endif %}
 
-<h3>Вправи цієї категорії</h3>
+            <div class="card-body">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p class="price">{{ product.price }} грн</p>
 
-{% for exercise in exercises %}
-    <div>
-        <h4>{{ exercise.name }}</h4>
-        <p>{{ exercise.description }}</p>
-        <p><b>Складність:</b> {{ exercise.difficulty }}</p>
-    </div>
-    <hr>
-{% empty %}
-    <p>У цій категорії поки немає вправ.</p>
-{% endfor %}
-
-<a href="{% url 'home' %}">Повернутися на головну</a>
+                <a class="btn" href="{% url 'product_detail' product.id %}">
+                    Детальніше
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <p>У цій категорії поки немає товарів.</p>
+    {% endfor %}
+</div>
 
 {% endblock %}

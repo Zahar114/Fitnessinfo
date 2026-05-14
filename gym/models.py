@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class MuscleGroup(models.Model):
+class ProductCategory(models.Model):
     name = models.CharField(max_length=100, verbose_name="Назва")
     description = models.TextField(verbose_name="Опис")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Створено о")
@@ -11,16 +11,12 @@ class MuscleGroup(models.Model):
         return self.name
 
 
-class Exercise(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Назва")
-    muscle_group = models.ForeignKey(
-        MuscleGroup,
-        on_delete=models.CASCADE,
-        related_name="exercises",
-        verbose_name="Група м'язів"
-    )
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name="products", verbose_name="Категорія")
     description = models.TextField(verbose_name="Опис")
-    difficulty = models.CharField(max_length=50, verbose_name="Складність")
+    price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Ціна")
+    image = models.ImageField(upload_to='products/', verbose_name="Фото", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Створено о")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Оновлено о")
 

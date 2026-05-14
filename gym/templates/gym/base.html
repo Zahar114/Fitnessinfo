@@ -1,35 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'gym/style.css' %}">
 </head>
 <body>
 
-<header>
-    <h1>Fitness Info</h1>
+<header class="header">
+    <div class="logo">FitShop</div>
 
-    <nav>
+    <nav class="menu">
         <a href="{% url 'home' %}">Головна</a>
-        <a href="{% url 'nutrition' %}">Харчування</a>
 
-        {% for group in muscle_groups %}
-            <a href="{% url 'category_exercises' group.id %}">{{ group.name }}</a>
+        {% for category in categories %}
+            <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
         {% endfor %}
     </nav>
 </header>
 
-<hr>
-
-<main>
+<main class="container">
     {% block content %}
     {% endblock %}
 </main>
 
-<hr>
-
-<footer>
-    <p>Fitness Info — сайт про тренування, харчування та здоровий спосіб життя.</p>
+<footer class="footer">
+    <p>FitShop — магазин спортивних товарів для тренувань, харчування та активного життя.</p>
     <p>Автор: Захар Машманюк</p>
 </footer>
 
