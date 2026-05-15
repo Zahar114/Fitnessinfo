@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-qin_$0)fj1@y09(=2e1)+dn+m^(dk49r&nqi^*9*q253g0@ie#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,3 +142,6 @@ LOGOUT_REDIRECT_URL = 'home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'fitshop@example.com'
+import os
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
