@@ -12,6 +12,7 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
+    image_url = models.URLField(verbose_name="Посилання на фото", blank=True, null=True)
     name = models.CharField(max_length=100, verbose_name="Назва")
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name="products", verbose_name="Категорія")
     description = models.TextField(verbose_name="Опис")
@@ -34,3 +35,21 @@ class NutritionPlan(models.Model):
 
     def __str__(self):
         return self.name
+    
+class NewsletterSubscriber(models.Model):
+    email = models.EmailField(verbose_name="Email")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Створено о")
+
+    def __str__(self):
+        return self.email
+
+
+class ProductRating(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="ratings", verbose_name="Товар")
+    name = models.CharField(max_length=100, verbose_name="Ім’я")
+    rating = models.IntegerField(verbose_name="Оцінка")
+    comment = models.TextField(verbose_name="Коментар", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Створено о")
+
+    def __str__(self):
+        return f"{self.product.name} - {self.rating}"

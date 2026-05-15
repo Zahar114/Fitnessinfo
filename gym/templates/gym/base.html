@@ -13,6 +13,7 @@
 
     <nav class="menu">
         <a href="{% url 'home' %}">Головна</a>
+        <a href="{% url 'cart' %}">Кошик</a>
 
         {% for category in categories %}
             <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
@@ -26,7 +27,7 @@
 </main>
 
 <footer class="footer">
-    <p>FitShop — магазин спортивних товарів для тренувань, харчування та активного життя.</p>
+    <p>FitShop — магазин спортивних товарів для тренувань та активного життя.</p>
     <p>Автор: Захар Машманюк</p>
 </footer>
 

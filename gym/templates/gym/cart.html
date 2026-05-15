@@ -3,14 +3,14 @@
 {% block content %}
 
 <section class="page-title">
-    <h1>{{ category.name }}</h1>
-    <p>{{ category.description }}</p>
+    <h1>Кошик</h1>
+    <p>Товари, які були додані до кошика.</p>
 </section>
 
 <div class="cards">
     {% for product in products %}
         <div class="card">
-{% if product.image %}
+            {% if product.image %}
     <img src="{{ product.image.url }}" alt="{{ product.name }}">
 {% elif product.image_url %}
     <img src="{{ product.image_url }}" alt="{{ product.name }}">
@@ -21,13 +21,21 @@
                 <p class="price">{{ product.price }} грн</p>
 
                 <a class="btn" href="{% url 'product_detail' product.id %}">
-                    Детальніше
+                    Переглянути
+                </a>
+
+                <a class="remove-btn" href="{% url 'remove_from_cart' product.id %}">
+                    Видалити з кошика
                 </a>
             </div>
         </div>
     {% empty %}
-        <p>У цій категорії поки немає товарів.</p>
+        <p>Кошик порожній.</p>
     {% endfor %}
 </div>
+
+<h2>Загальна сума: {{ total }} грн</h2>
+
+<a class="btn" href="{% url 'home' %}">Повернутися до магазину</a>
 
 {% endblock %}

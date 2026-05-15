@@ -3,27 +3,26 @@
 {% block content %}
 
 <section class="hero">
-    <div>
+    <div class="hero-content">
         <h1>FitShop</h1>
-        <p>Інтернет-магазин спортивних товарів для залу, дому та активного способу життя.</p>
-        <a class="hero-btn" href="#catalog">Перейти до каталогу</a>
+        <p>Магазин спортивних товарів для тренувань вдома та в залі.</p>
     </div>
 </section>
 
 <section class="info-grid">
     <div class="info-card">
         <h3>Каталог товарів</h3>
-        <p>Тут можна переглянути спортивні товари по категоріях.</p>
+        <p>Переглядай спортивні товари по категоріях.</p>
     </div>
 
     <div class="info-card">
-        <h3>Харчування</h3>
-        <p>Окрема сторінка з планами харчування для тренувань.</p>
+        <h3>Кошик</h3>
+        <p>Додавай товари в кошик перед покупкою.</p>
     </div>
 
     <div class="info-card">
-        <h3>Сторінка товару</h3>
-        <p>Кожен товар має фото, опис, ціну та кнопку купівлі.</p>
+        <h3>Оцінки товарів</h3>
+        <p>Кожен користувач може оцінити товар.</p>
     </div>
 </section>
 
@@ -32,6 +31,11 @@
 <div class="cards">
     {% for category in categories %}
         <div class="card">
+            {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% elif product.image_url %}
+    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+{% endif %}
             <div class="card-body">
                 <h3>{{ category.name }}</h3>
                 <p>{{ category.description }}</p>
@@ -48,9 +52,6 @@
 <div class="cards">
     {% for product in products %}
         <div class="card">
-            {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            {% endif %}
 
             <div class="card-body">
                 <h3>{{ product.name }}</h3>
@@ -63,5 +64,16 @@
         </div>
     {% endfor %}
 </div>
+
+<section class="newsletter">
+    <h2>Підписка на розсилку</h2>
+    <p>Залиш email, щоб отримувати новини про спортивні товари та акції.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Ваш email" required>
+        <button class="btn" type="submit">Підписатися</button>
+    </form>
+</section>
 
 {% endblock %}

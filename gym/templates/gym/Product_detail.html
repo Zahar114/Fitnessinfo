@@ -3,28 +3,61 @@
 {% block content %}
 
 <div class="product-page">
-    <div class="product-image">
-        {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-        {% endif %}
-    </div>
+    {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% elif product.image_url %}
+    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+{% endif %}
 
     <div class="product-info">
         <h1>{{ product.name }}</h1>
-
         <p class="category-text">Категорія: {{ product.category.name }}</p>
-
         <p>{{ product.description }}</p>
-
         <p class="product-price">{{ product.price }} грн</p>
 
-        <button class="buy-btn" disabled>Купити</button>
+        
+        <a class="buy-btn" href="{% url 'add_to_cart' product.id %}">
+    Додати в кошик
+</a>
 
-        <p class="note">Кнопка поки не активна, бо кошик і оплата ще не підключені.</p>
+        <h3>Середня оцінка:</h3>
+        {% if average_rating %}
+            <p>{{ average_rating|floatformat:1 }} / 5</p>
+        {% else %}
+            <p>Оцінок ще немає</p>
+        {% endif %}
 
-        <a class="back-link" href="{% url 'category_products' product.category.id %}">
-            Назад до категорії
-        </a>
+        <h3>Оцінити товар</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Ваше ім’я" required>
+
+            <select name="rating" required>
+                <option value="5">5 — Відмінно</option>
+                <option value="4">4 — Добре</option>
+                <option value="3">3 — Нормально</option>
+                <option value="2">2 — Погано</option>
+                <option value="1">1 — Дуже погано</option>
+            </select>
+
+            <textarea name="comment" placeholder="Коментар"></textarea>
+
+            <button class="btn" type="submit">Надіслати оцінку</button>
+        </form>
+        <h3>Відгуки користувачів</h3>
+
+<div class="reviews">
+    {% for review in product.ratings.all %}
+        <div class="review">
+            <b>{{ review.name }}</b>
+            <p>Оцінка: ⭐ {{ review.rating }} / 5</p>
+            <p>{{ review.comment }}</p>
+        </div>
+    {% empty %}
+        <p>Відгуків поки немає.</p>
+    {% endfor %}
+</div>
     </div>
 </div>
 
