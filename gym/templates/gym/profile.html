@@ -1,0 +1,36 @@
+{% extends 'gym/base.html' %}
+
+{% block content %}
+
+<section class="page-title">
+    <h1>Особистий кабінет</h1>
+    <p>Користувач: <b>{{ user.username }}</b></p>
+</section>
+
+<h2 class="section-title">Замовлення</h2>
+
+<div class="cart-box">
+    {% for order in orders %}
+        <div class="cart-item">
+            <div>
+                <h3>Замовлення #{{ order.id }}</h3>
+
+                <p><b>Користувач:</b> {{ order.user.username }}</p>
+                <p><b>Сума:</b> {{ order.total }} грн</p>
+                <p><b>Дата:</b> {{ order.created_at }}</p>
+
+                <p><b>Товари:</b></p>
+
+                <ul>
+                    {% for product in order.products.all %}
+                        <li>{{ product.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% empty %}
+        <p>Замовлень поки немає.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

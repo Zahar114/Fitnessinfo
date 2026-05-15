@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ProductCategory, Product, NewsletterSubscriber, ProductRating
+from .models import ProductCategory, Product, NewsletterSubscriber, ProductRating, Order, PasswordResetCode
 
 
 @admin.register(ProductCategory)
@@ -21,3 +21,13 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
 @admin.register(ProductRating)
 class ProductRatingAdmin(admin.ModelAdmin):
     list_display = ('product', 'name', 'rating', 'created_at')
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'total', 'created_at')
+
+
+@admin.register(PasswordResetCode)
+class PasswordResetCodeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'code', 'created_at')
